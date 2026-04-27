@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from app.core.config import get_settings
-
+from app.api.api import api_router
 from app.db.session import database_connection
 
 settings = get_settings()
@@ -25,3 +25,5 @@ def health_check():
         "version": settings.app_version,
         "database_connected": db_connected,
     }
+
+app.include_router(api_router, prefix=settings.api_v1_prefix)
